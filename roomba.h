@@ -28,6 +28,12 @@ typedef enum
     SATURDAY
 } day_t;
 
+/*
+ * Initalizes the ROI interface.
+ * This causes the current mode to be changed to safe. 
+ */
+void initialize_roomba();
+
 /* 
  * Sets the Roomba into Passive, Safe, or Full mode. 
  * The current mode restricts the operations available to the Roomba.
