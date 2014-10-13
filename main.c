@@ -6,7 +6,7 @@ int main(void) {
 	processor_init();
 	UART_init_9600();
 
-	UARTSendArray("Hello", 5);
+	UART_send_array("Hello", 5);
 
 	while (1)
 	{

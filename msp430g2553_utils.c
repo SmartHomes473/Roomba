@@ -1,4 +1,5 @@
 #include "msp430g2553.h"
+#include "msp430g2553_utils.h"
 
 #define BAUD_9600 104
 
