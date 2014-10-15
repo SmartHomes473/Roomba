@@ -6,10 +6,13 @@ int main(void) {
 	processor_init();
 	UART_init_9600();
 
-	UART_send_array("Hello", 5);
-
+	P1DIR = 0x40;
+	P1OUT = 0;
 	while (1)
 	{
-		/* Trap CPU */
+		P1OUT = 0x40;
+		_delay_cycles(1000);
+		P1OUT = 0;
+		_delay_cycles(1000);
 	}
 }

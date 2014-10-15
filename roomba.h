@@ -16,17 +16,6 @@ typedef enum
     MAX
 } clean_mode_t;
 
-typedef enum
-{
-    SUNDAY,
-    MONDAY,
-    TUESDAY,
-    WEDNESDAY,
-    THURSDAY,
-    FRIDAY,
-    SATURDAY
-} day_t;
-
 /*
  * Initalizes the ROI interface.
  * This causes the current mode to be changed to safe. 
@@ -54,18 +43,6 @@ void start_clean(clean_mode_t mode);
  * This changes the current mode to passive.
  */
 void send_dock();
-
-/* 
- * Sets a schedule to run the Roomba. 
- * Takes an array of days, with corresponds hours/minutes to run.
- * Hours are in 24 hours format, from 0-23. 
- */
-void set_schedule(day_t* day, int* hour, int* minute);
-
-/*
- * Set the current day and time.
- */
-void set_time(day_t day, int hour, int minute);
 
 /*
  * Power down the Roomba
