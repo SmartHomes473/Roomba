@@ -4,7 +4,6 @@
 
 typedef enum 
 {
-    OFF,
     PASSIVE,
     SAFE,
     FULL
@@ -51,6 +50,7 @@ void start_clean(clean_mode_t mode);
 
 /*
  * Starts the Roomba's return to docking station algorithm.
+ * Only works if a cleaning mode currently active.
  * This changes the current mode to passive.
  */
 void send_dock();

@@ -11,6 +11,10 @@
 #define ROI_SPOT 134
 #define ROI_CLEAN 135
 #define ROI_MAX 136
+#define ROI_FORCE_DOCK 143
+
+/* initiaize_roomba will start the mode as SAFE */
+static roomba_mode_t current_mode = SAFE;
 
 /******************************************************************************
 * Initialize ROI on Roomba 
@@ -28,9 +32,6 @@ void initialize_roomba()
 ******************************************************************************/
 void set_mode(roomba_mode_t mode)
 {
-	/* initiaize_roomba will start the mode as SAFE */
-	static roomba_mode_t current_mode = SAFE;
-
 	/* TODO: Account for DD line on waking from sleep */
 
 	if (mode == current_mode) return;
@@ -57,4 +58,33 @@ void set_mode(roomba_mode_t mode)
 		}
 	}
 	current_mode = mode;
+}
+
+
+/******************************************************************************
+* Start the normal cleaning cycle
+******************************************************************************/
+void start_clean(clean_mode_t mode)
+{
+    if (current_mode != PASSIVE) {
+        switch(mode) {
+            case DEFAULT:
+                UART_send_byte(ROI_CLEAN);
+                break;
+            case SPOT:
+                UART_send_byte(ROI_START);
+                break;
+            case MAX:
+                UART_send_byte(ROI_MAX);
+                break;
+        }
+    }
+}
+
+/******************************************************************************
+* Send Roomba back to the dock
+******************************************************************************/
+void send_dock()
+{
+    UART_send_byte(ROI_FORCE_DOCK);
 }
