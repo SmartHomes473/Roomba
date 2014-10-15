@@ -4,6 +4,7 @@
 
 typedef enum 
 {
+	SLEEP,
     PASSIVE,
     SAFE,
     FULL
@@ -25,7 +26,14 @@ void initialize_roomba();
 /* 
  * Sets the Roomba into Passive, Safe, or Full mode. 
  * The current mode restricts the operations available to the Roomba.
- * See ROI spec for details
+ * See ROI spec for details.
+ * Possible mode transitions: 
+ *		PASSIVE -> SAFE
+ *		FULL	-> SAFE
+ *		SAFE	-> FULL
+ *		SAFE	-> SLEEP
+ *		FULL	-> SLEEP
+ *		SLEEP	-> PASSIVE
  */
 void set_mode(roomba_mode_t mode);
 
