@@ -1,4 +1,9 @@
 #include <stdint.h>
+#include "msp430g2553.h"
+
+#define delay_20ms() _delay_cycles(20 * 1000)
+#define delay_500ms() _delay_cycles(500000)
+
 
 /**
  * Initalize procesor clocks
@@ -10,6 +15,11 @@ void processor_init();
  * Initialze USCI for UART with a 9600 baud rate 
  */
 void UART_init_9600();
+
+/**
+ * Initialze USCI for UART with a 57600 baud rate
+ */
+void UART_init_57600();
 
 /**
  * Send a byte over UART

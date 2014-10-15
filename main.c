@@ -1,18 +1,19 @@
 #include "msp430g2553.h"
 #include "msp430g2553_utils.h"
+#include "roomba.h"
+#include "software_uart.h"
 
 int main(void) {
 
 	processor_init();
-	UART_init_9600();
+	UART_init_57600();
+	softwareUART_init();
 
-	P1DIR = 0x40;
-	P1OUT = 0;
+	uint8_t array[5] = {5, 10, 15, 20, 25};
+	softwareUART_send_array(array, 5);
+
 	while (1)
 	{
-		P1OUT = 0x40;
-		_delay_cycles(1000);
-		P1OUT = 0;
-		_delay_cycles(1000);
+
 	}
 }
