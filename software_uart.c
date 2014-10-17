@@ -1,5 +1,4 @@
 #include "software_uart.h"
-#include "msp430g2553.h"
 
 
 #define TXD BIT5

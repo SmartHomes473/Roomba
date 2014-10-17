@@ -1,5 +1,5 @@
 #include "hardware_uart.h"
-#include "msp430g2553.h"
+#include "roomba.h"
 
 #define BAUD_9600 104
 #define BAUD_57600 1
@@ -61,8 +61,7 @@ void UART_init_57600()
 ******************************************************************************/
 void UART_send_byte(uint8_t byte)
 {
-	while(!(IFG2 & UCA0TXIFG))
-	{
+	while(!(IFG2 & UCA0TXIFG)) {
 		/* Wait for TX buffer to be ready */
 	}
 
@@ -74,8 +73,7 @@ void UART_send_byte(uint8_t byte)
 ******************************************************************************/
 void UART_send_array(uint8_t* array, uint32_t array_length)
 {
-	while (array_length--)
-	{
+	while (array_length--) {
 		UART_send_byte(*array);
 		array++;
 	}
@@ -90,4 +88,13 @@ __attribute__((__interrupt__(USCIAB0RX_VECTOR)))
 isr_USCI_RX(void)
 {
 	volatile uint8_t data = UCA0RXBUF;
+
+	switch(data) {
+	case 1:
+		initialize_roomba();
+		break;
+	case 2:
+		start_clean(DEFAULT);
+		break;
+	}
 }

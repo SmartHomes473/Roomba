@@ -20,5 +20,15 @@ void processor_init()
 	P1OUT |= BIT0;
 }
 
-		
+/******************************************************************************
+* Delay for XXXX Amount of time
+******************************************************************************/
+void __inline__ delay_cycles(register unsigned int n)
+{
+	__asm__ __volatile__ (
+			"1: \n"
+			" dec	%[n] \n"
+			" jne	1b \n"
+			: [n] "+r"(n));
+}
 

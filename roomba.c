@@ -1,5 +1,6 @@
 #include "roomba.h"
 #include "msp430g2553_utils.h"
+#include "software_uart.h"
 
 
 /* ROI Opcodes */
@@ -20,7 +21,7 @@ static roomba_mode_t current_mode = SAFE;
 /******************************************************************************
 * Internal function to activate the Device Detect line
 ******************************************************************************/
-static device_detect_on()
+static void device_detect_on()
 {
 	P1OUT = 0x0;
 }
@@ -28,7 +29,7 @@ static device_detect_on()
 /******************************************************************************
 * Internal function to deactivate the Device Detect line
 ******************************************************************************/
-static device_detect_off()
+static void device_detect_off()
 {
 	P1OUT = 0x1;
 }
@@ -38,9 +39,9 @@ static device_detect_off()
 ******************************************************************************/
 void initialize_roomba()
 {
-	UART_send_byte(ROI_START);
+	softwareUART_send_byte(ROI_START);
 	delay_20ms();
-	UART_send_byte(ROI_CONTROL);
+	softwareUART_send_byte(ROI_CONTROL);
 	delay_20ms();
 }
 
@@ -54,7 +55,7 @@ void set_mode(roomba_mode_t mode)
 
 	switch (mode) {
 		case SLEEP:
-			UART_send_byte(ROI_POWER);
+			softwareUART_send_byte(ROI_POWER);
 			break;
 		case PASSIVE:
 			if (current_mode == SLEEP) {
@@ -62,18 +63,18 @@ void set_mode(roomba_mode_t mode)
 				delay_500ms();
 				device_detect_off();
 			} else {
-				UART_send_byte(ROI_START);
+				softwareUART_send_byte(ROI_START);
 			}
 			break;
 		case SAFE:
 			if (current_mode == FULL) {
-				UART_send_byte(ROI_SAFE);
+				softwareUART_send_byte(ROI_SAFE);
 			} else if (current_mode == PASSIVE) {
-				UART_send_byte(ROI_CONTROL);
+				softwareUART_send_byte(ROI_CONTROL);
 			}
 			break;	
 		case FULL:
-			UART_send_byte(ROI_FULL);
+			softwareUART_send_byte(ROI_FULL);
 			break;
 	}
 	/* Required delay after changing modes */
@@ -90,13 +91,13 @@ void start_clean(clean_mode_t mode)
     if (current_mode != PASSIVE) {
         switch(mode) {
             case DEFAULT:
-                UART_send_byte(ROI_CLEAN);
+                softwareUART_send_byte(ROI_CLEAN);
                 break;
             case SPOT:
-                UART_send_byte(ROI_START);
+                softwareUART_send_byte(ROI_START);
                 break;
             case MAX:
-                UART_send_byte(ROI_MAX);
+                softwareUART_send_byte(ROI_MAX);
                 break;
         }
     }
@@ -107,7 +108,7 @@ void start_clean(clean_mode_t mode)
 ******************************************************************************/
 void send_dock()
 {
-    UART_send_byte(ROI_FORCE_DOCK);
+    softwareUART_send_byte(ROI_FORCE_DOCK);
 }
 
 
