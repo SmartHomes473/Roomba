@@ -1,4 +1,5 @@
 #include "software_uart.h"
+#include "msp430g2553.h"
 
 
 #define TXD BIT5
@@ -16,14 +17,14 @@ void softwareUART_init()
 
 	/* enable interrupts */
 	__bis_SR_register(GIE);
-
 }
 
 /******************************************************************************
 * ISR for Timer_A - used to create the software UART send
 ******************************************************************************/
-#pragma vector=TIMER0_A0_VECTOR
-__interrupt void Timer_A (void)
+static void
+__attribute__((__interrupt__(TIMER0_A0_VECTOR)))
+isr_timerA(void)
 {
 	CCR0 += BIT_TIME;
 

@@ -1,7 +1,5 @@
 #include "msp430g2553_utils.h"
 
-#define BAUD_9600 104
-#define BAUD_57600 1
 
 /******************************************************************************
 * Initialize Processor 

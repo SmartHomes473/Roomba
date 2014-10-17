@@ -1,3 +1,9 @@
+#include "hardware_uart.h"
+#include "msp430g2553.h"
+
+#define BAUD_9600 104
+#define BAUD_57600 1
+
 /******************************************************************************
 * Initialize UART at 9600 Baud
 ******************************************************************************/
@@ -79,10 +85,9 @@ void UART_send_array(uint8_t* array, uint32_t array_length)
 /******************************************************************************
 * ISR for USCI A0 Receive
 ******************************************************************************/
-#pragma vector=USCIAB0RX_VECTOR
-__interrupt void USCI0RX_ISR(void)
+static void
+__attribute__((__interrupt__(USCIAB0RX_VECTOR)))
+isr_USCI_RX(void)
 {
 	volatile uint8_t data = UCA0RXBUF;
-
-	printf("%d \n", data);
 }
