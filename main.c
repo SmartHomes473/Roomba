@@ -2,6 +2,7 @@
 #include "msp430g2553_utils.h"
 #include "roomba.h"
 #include "software_uart.h"
+#include "hardware_uart.h"
 
 int main(void) {
 
