@@ -1,8 +1,8 @@
 #include <stdint.h>
 #include "msp430g2553.h"
 
-#define delay_20ms() delay_cycles(20 * 1000)
-#define delay_500ms() delay_cycles((uint32_t)500000)
+#define delay_20ms() _delay_cycles(20 * 1000)
+#define delay_500ms() _delay_cycles((uint32_t)500000)
 
 
 /**
@@ -14,4 +14,4 @@ void processor_init();
 /**
  * Delay processor for n * XXXX time
  */
-void delay_cycles(register unsigned int n);
+//void delay_cycles(register unsigned int n);

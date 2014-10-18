@@ -1,5 +1,9 @@
 #include "msp430g2553_utils.h"
 
+/**
+ * This variable contains the most recent data received on the hardware UART pin P1.1
+ */
+extern volatile uint8_t new_UART_RX;
 
 /**
  * Initialze USCI for UART with a 9600 baud rate 

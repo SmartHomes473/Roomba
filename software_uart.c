@@ -21,9 +21,12 @@ void softwareUART_init()
 /******************************************************************************
 * ISR for Timer_A - used to create the software UART send
 ******************************************************************************/
-static void
+/*static void
 __attribute__((__interrupt__(TIMER0_A0_VECTOR)))
 isr_timerA(void)
+*/
+#pragma vector=TIMER0_A0_VECTOR
+__interrupt void TIMER_ISR(void)
 {
 	CCR0 += BIT_TIME;
 

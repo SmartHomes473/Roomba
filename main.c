@@ -7,14 +7,16 @@
 int main(void) {
 
 	processor_init();
-	UART_init_57600();
+	UART_init_9600();
 	softwareUART_init();
 
-	uint8_t array[5] = {5, 10, 15, 20, 25};
-	softwareUART_send_array(array, 5);
+	softwareUART_send_byte(1);
 
 	while (1)
 	{
-
+		if (new_UART_RX != 0) {
+			softwareUART_send_byte(new_UART_RX);
+			new_UART_RX = 0;
+		}
 	}
 }

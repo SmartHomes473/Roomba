@@ -1,4 +1,5 @@
 #include "hardware_uart.h"
+#include "software_uart.h"
 #include "roomba.h"
 
 #define BAUD_9600 104
@@ -79,22 +80,26 @@ void UART_send_array(uint8_t* array, uint32_t array_length)
 	}
 }
 
-
+volatile uint8_t new_UART_RX = 0;
 /******************************************************************************
 * ISR for USCI A0 Receive
 ******************************************************************************/
+/*
 static void
 __attribute__((__interrupt__(USCIAB0RX_VECTOR)))
 isr_USCI_RX(void)
+*/
+#pragma vector=USCIAB0RX_VECTOR
+__interrupt void USCI0RX_ISR(void)
 {
-	volatile uint8_t data = UCA0RXBUF;
+	new_UART_RX = UCA0RXBUF;
 
-	switch(data) {
-	case 1:
-		initialize_roomba();
-		break;
-	case 2:
-		start_clean(DEFAULT);
-		break;
-	}
+//	switch(data) {
+//	case 1:
+//		initialize_roomba();
+//		break;
+//	case 2:
+//		start_clean(DEFAULT);
+//		break;
+//	}
 }
