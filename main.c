@@ -21,7 +21,7 @@ int main(void) {
 	softwareUART_init();
 
 	parse_state_t state = NONE;
-	uint8_t packet_size = 0;
+	uint8_t packet_size = 1;
 	uint8_t data[UINT8_MAX];
 	uint8_t data_idx = 0;
 
@@ -40,17 +40,17 @@ int main(void) {
 				state = DATA;
 				break;
 			case DATA:
-				if (packet_size > data_idx) {
-					data[data_idx] = new_UART_RX;
-					data_idx++;
-				} else {
-					deserialize(data);
-					data_idx = 0;
-					state = NONE;
-				}
+				data[data_idx] = new_UART_RX;
+				data_idx++;
 				break;
 			}
 			new_UART_RX = 0;
+		}
+
+		if (data_idx >= packet_size) {
+			deserialize(data);
+			data_idx = 0;
+			state = NONE;
 		}
 	}
 }

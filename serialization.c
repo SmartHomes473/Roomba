@@ -13,6 +13,7 @@ void deserialize(uint8_t* function)
 		initialize_roomba();
 		break;
 	case SET_MODE:
+
 		set_mode((roomba_mode_t)function[1]);
 		break;
 	case START_CLEAN:
