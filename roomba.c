@@ -119,7 +119,7 @@ void send_dock()
 void set_wheel_speeds(int16_t left_wheel, int16_t right_wheel)
 {
 	if (current_mode == SAFE || current_mode == FULL) {
-		int8_t drive_direct[5];
+		uint8_t drive_direct[5];
 		drive_direct[0] = ROI_DRIVE_DIRECT;
 
 		/* Send high byte right, low byte right, high byte left, low byte left */

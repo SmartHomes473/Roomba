@@ -3,6 +3,16 @@
 #include "roomba.h"
 #include "software_uart.h"
 #include "hardware_uart.h"
+#include "serialization.h"
+
+#define PACKET_START_BYTE 0xFF
+
+typedef enum
+{
+	NONE,
+	SIZE,
+	DATA
+} parse_state_t;
 
 int main(void) {
 
@@ -10,10 +20,36 @@ int main(void) {
 	UART_init_9600();
 	softwareUART_init();
 
+	parse_state_t state = NONE;
+	uint8_t packet_size = 0;
+	uint8_t data[UINT8_MAX];
+	uint8_t data_idx = 0;
+
 	while (1)
 	{
 		if (new_UART_RX != 0) {
-			softwareUART_send_byte(new_UART_RX);
+			switch(state)
+			{
+			case NONE:
+				if (new_UART_RX == PACKET_START_BYTE) {
+					state = SIZE;
+				}
+				break;
+			case SIZE:
+				packet_size = new_UART_RX;
+				state = DATA;
+				break;
+			case DATA:
+				if (packet_size > data_idx) {
+					data[data_idx] = new_UART_RX;
+					data_idx++;
+				} else {
+					deserialize(data);
+					data_idx = 0;
+					state = NONE;
+				}
+				break;
+			}
 			new_UART_RX = 0;
 		}
 	}

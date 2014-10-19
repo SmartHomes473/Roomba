@@ -1,6 +1,8 @@
-/**
+/*
  * This header describes the external API interface for the Roomba
  */
+
+#include <stdint.h>
 
 typedef enum 
 {
@@ -59,7 +61,3 @@ void send_dock();
  */
 void set_wheel_speeds(int16_t left_wheel, int16_t right_wheel);
 
-/*
- * Power down the Roomba
- */
-void power_down();
