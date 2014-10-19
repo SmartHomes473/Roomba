@@ -13,6 +13,7 @@
 #define ROI_CLEAN 135
 #define ROI_MAX 136
 #define ROI_FORCE_DOCK 143
+#define ROI_DRIVE_DIRECT 145
 
 /* initiaize_roomba will start the mode as SAFE */
 static roomba_mode_t current_mode = SAFE;
@@ -41,6 +42,7 @@ void initialize_roomba()
 {
 	softwareUART_send_byte(ROI_START);
 	delay_20ms();
+
 	softwareUART_send_byte(ROI_CONTROL);
 	delay_20ms();
 }
@@ -88,7 +90,7 @@ void set_mode(roomba_mode_t mode)
 ******************************************************************************/
 void start_clean(clean_mode_t mode)
 {
-    if (current_mode != PASSIVE) {
+    if (current_mode != SLEEP) {
         switch(mode) {
             case DEFAULT:
                 softwareUART_send_byte(ROI_CLEAN);
@@ -111,5 +113,23 @@ void send_dock()
     softwareUART_send_byte(ROI_FORCE_DOCK);
 }
 
+/******************************************************************************
+* Set the wheel speeds of the Roomba
+******************************************************************************/
+void set_wheel_speeds(int16_t left_wheel, int16_t right_wheel)
+{
+	if (current_mode == SAFE || current_mode == FULL) {
+		int8_t drive_direct[5];
+		drive_direct[0] = ROI_DRIVE_DIRECT;
+
+		/* Send high byte right, low byte right, high byte left, low byte left */
+		drive_direct[1] = (right_wheel >> 8) & 0xFF;
+		drive_direct[2] = right_wheel & 0xFF;
+		drive_direct[3] = (left_wheel >> 8) & 0xFF;
+		drive_direct[4] = left_wheel & 0xFF;
+
+		softwareUART_send_array(drive_direct, 5);
+	}
+}
 
 

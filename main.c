@@ -10,8 +10,6 @@ int main(void) {
 	UART_init_9600();
 	softwareUART_init();
 
-	softwareUART_send_byte(1);
-
 	while (1)
 	{
 		if (new_UART_RX != 0) {

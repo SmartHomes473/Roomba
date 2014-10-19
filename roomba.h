@@ -53,6 +53,13 @@ void start_clean(clean_mode_t mode);
 void send_dock();
 
 /*
+ * Set the speed for the left and right drive wheels.
+ * The speed should be in mm/s and ranges from -500 - 500
+ * Requires current mode to be Safe or Full
+ */
+void set_wheel_speeds(int16_t left_wheel, int16_t right_wheel);
+
+/*
  * Power down the Roomba
  */
 void power_down();
