@@ -20,6 +20,7 @@ int main(void) {
 	UART_init_9600();
 	softwareUART_init();
 
+	uint8_t new_UART_RX;
 	parse_state_t state = NONE;
 	uint8_t packet_size = 1;
 	uint8_t data[UINT8_MAX];
@@ -27,7 +28,8 @@ int main(void) {
 
 	while (1)
 	{
-		if (new_UART_RX != 0) {
+		if (UART_data_available() == 1) {
+			new_UART_RX = UART_get_data();
 			switch(state)
 			{
 			case NONE:
