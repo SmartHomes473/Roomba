@@ -6,12 +6,16 @@
 #include "serialization.h"
 
 #define PACKET_START_BYTE 0xFF
+#define PACKET_END_BYTE 0x04
 
 typedef enum
 {
 	NONE,
+	STATUS,
 	SIZE,
-	DATA
+	SIZE_2,
+	DATA, 
+	END
 } parse_state_t;
 
 int main(void) {
@@ -22,9 +26,10 @@ int main(void) {
 
 	uint8_t new_UART_RX;
 	parse_state_t state = NONE;
-	uint8_t packet_size = 1;
+	uint16_t packet_size = 1;
 	uint8_t data[UINT8_MAX];
 	uint8_t data_idx = 0;
+	uint8_t status;
 
 	while (1)
 	{
@@ -34,25 +39,35 @@ int main(void) {
 			{
 			case NONE:
 				if (new_UART_RX == PACKET_START_BYTE) {
-					state = SIZE;
+					state = STATUS;
 				}
 				break;
+			case STATUS:
+				status = new_UART_RX;
+				break;
 			case SIZE:
-				packet_size = new_UART_RX;
-				state = DATA;
+				packet_size = (new_UART_RX << 8);
+				state = SIZE_2;
+				break;
+			case SIZE_2:
+				packet_size |= (new_UART_RX);
+				state = DATA:
 				break;
 			case DATA:
 				data[data_idx] = new_UART_RX;
 				data_idx++;
 				break;
+			case END:
+				assert(new_UART_RX == PACKET_END_BYTE);
+				state = NONE;
+				break;
 			}
-			new_UART_RX = 0;
 		}
 
 		if (data_idx >= packet_size) {
 			deserialize(data);
 			data_idx = 0;
-			state = NONE;
+			state = END;
 		}
 	}
 }
