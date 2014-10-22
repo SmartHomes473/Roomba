@@ -96,7 +96,7 @@ void start_clean(clean_mode_t mode)
                 softwareUART_send_byte(ROI_CLEAN);
                 break;
             case SPOT:
-                softwareUART_send_byte(ROI_START);
+                softwareUART_send_byte(ROI_SPOT);
                 break;
             case MAX:
                 softwareUART_send_byte(ROI_MAX);

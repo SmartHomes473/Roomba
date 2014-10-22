@@ -11,6 +11,7 @@
 typedef enum
 {
 	NONE,
+	NONE_2,
 	STATUS,
 	SIZE,
 	SIZE_2,
@@ -27,9 +28,8 @@ int main(void) {
 	uint8_t new_UART_RX;
 	parse_state_t state = NONE;
 	uint16_t packet_size = 1;
-	uint8_t data[UINT8_MAX];
+	uint8_t data[10];
 	uint8_t data_idx = 0;
-	uint8_t status;
 
 	while (1)
 	{
@@ -39,11 +39,14 @@ int main(void) {
 			{
 			case NONE:
 				if (new_UART_RX == PACKET_START_BYTE) {
-					state = STATUS;
+					state = NONE_2;
 				}
 				break;
+			case NONE_2:
+				state = STATUS;
+				break;
 			case STATUS:
-				status = new_UART_RX;
+				state = SIZE;
 				break;
 			case SIZE:
 				packet_size = (new_UART_RX << 8);
@@ -51,20 +54,19 @@ int main(void) {
 				break;
 			case SIZE_2:
 				packet_size |= (new_UART_RX);
-				state = DATA:
+				state = DATA;
 				break;
 			case DATA:
 				data[data_idx] = new_UART_RX;
 				data_idx++;
 				break;
 			case END:
-				assert(new_UART_RX == PACKET_END_BYTE);
 				state = NONE;
 				break;
 			}
 		}
 
-		if (data_idx >= packet_size) {
+		if (data_idx >= packet_size && state == DATA) {
 			deserialize(data);
 			data_idx = 0;
 			state = END;
