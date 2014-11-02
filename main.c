@@ -5,13 +5,12 @@
 #include "hardware_uart.h"
 #include "serialization.h"
 
-#define PACKET_START_BYTE 0xFF
+#define PACKET_START_BYTE 0x0F
 #define PACKET_END_BYTE 0x04
 
 typedef enum
 {
 	NONE,
-	NONE_2,
 	STATUS,
 	SIZE,
 	SIZE_2,
@@ -39,11 +38,8 @@ int main(void) {
 			{
 			case NONE:
 				if (new_UART_RX == PACKET_START_BYTE) {
-					state = NONE_2;
+					state = STATUS;
 				}
-				break;
-			case NONE_2:
-				state = STATUS;
 				break;
 			case STATUS:
 				state = SIZE;
