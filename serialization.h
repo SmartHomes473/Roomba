@@ -9,7 +9,8 @@ typedef enum
 	SET_MODE,
 	START_CLEAN,
 	SEND_DOCK,
-	SET_WHEEL_SPEEDS
+	SET_WHEEL_SPEEDS,
+	TEST_MOVE
 } roomba_functions_t;
 
 /*

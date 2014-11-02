@@ -25,6 +25,8 @@ typedef enum
  */
 void initialize_roomba();
 
+void test_move();
+
 /* 
  * Sets the Roomba into Passive, Safe, or Full mode. 
  * The current mode restricts the operations available to the Roomba.

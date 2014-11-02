@@ -40,11 +40,35 @@ static void device_detect_off()
 ******************************************************************************/
 void initialize_roomba()
 {
-	softwareUART_send_byte(ROI_START);
-	delay_20ms();
+//	softwareUART_send_byte(ROI_START);
+//	delay_20ms();
+//
+//	softwareUART_send_byte(ROI_CONTROL);
+//	delay_20ms();
 
-	softwareUART_send_byte(ROI_CONTROL);
-	delay_20ms();
+	softwareUART_send_byte(128);
+	_delay_cycles(1000000);
+	softwareUART_send_byte(131);
+	_delay_cycles(5000000);
+}
+
+void test_move()
+{
+	// Go forward
+	softwareUART_send_byte(137);
+	softwareUART_send_byte(0x00);
+	softwareUART_send_byte(0xC8);
+	softwareUART_send_byte(0x80);
+	softwareUART_send_byte(0x00);
+
+	_delay_cycles(500000);
+
+	// Stop
+	softwareUART_send_byte(137);
+	softwareUART_send_byte(0x00);
+	softwareUART_send_byte(0x00);
+	softwareUART_send_byte(0x00);
+	softwareUART_send_byte(0x00);
 }
 
 

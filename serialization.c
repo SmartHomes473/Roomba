@@ -30,6 +30,9 @@ void deserialize(uint8_t* function)
 		set_wheel_speeds(right, left);
 	}
 		break;
+	case TEST_MOVE:
+		test_move();
+		break;
 	}
 }
 
