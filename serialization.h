@@ -5,13 +5,16 @@
 
 typedef enum
 {
-	INITIALIZE_ROOMBA,
-	SET_MODE,
-	START_CLEAN,
-	SEND_DOCK,
-	SET_WHEEL_SPEEDS,
-	TEST_MOVE
+	INITIALIZE_ROOMBA	= '0',
+	SET_MODE		  	= '1',
+	START_CLEAN			= '2',
+	SEND_DOCK			= '3',
+	SET_WHEEL_SPEEDS	= '4',
+	TEST_MOVE			= '5'
 } roomba_functions_t;
+
+/* '0' is ASCII is 48 */
+#define ASCII_OFFSET 48
 
 /*
  * This function takes the serialized function and calls the appropriate Roomba interface function

@@ -13,10 +13,10 @@ void deserialize(uint8_t* function)
 		initialize_roomba();
 		break;
 	case SET_MODE:
-		set_mode((roomba_mode_t)function[1]);
+		set_mode((roomba_mode_t)(function[1] - ASCII_OFFSET));
 		break;
 	case START_CLEAN:
-		start_clean((clean_mode_t)function[1]);
+		start_clean((clean_mode_t)(function[1] - ASCII_OFFSET));
 		break;
 	case SEND_DOCK:
 		send_dock();
