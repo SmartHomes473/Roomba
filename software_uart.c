@@ -1,7 +1,7 @@
 #include "software_uart.h"
 
 
-#define TXD BIT5
+#define TXD BIT4
 #define BIT_TIME 52 /* 1MHz / 19200 baud = 52 */
 
 static uint8_t bit_count;

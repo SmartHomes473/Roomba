@@ -19,7 +19,6 @@ typedef enum
 } parse_state_t;
 
 int main(void) {
-
 	processor_init();
 	UART_init_9600();
 	softwareUART_init();
@@ -32,6 +31,7 @@ int main(void) {
 
 	while (1)
 	{
+
 		if (UART_data_available() == 1) {
 			new_UART_RX = UART_get_data();
 			switch(state)
@@ -69,3 +69,4 @@ int main(void) {
 		}
 	}
 }
+
