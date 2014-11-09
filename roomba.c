@@ -15,6 +15,8 @@
 #define ROI_FORCE_DOCK 143
 #define ROI_DRIVE_DIRECT 145
 
+#define DD_PIN BIT0
+
 /* initiaize_roomba will start the mode as SAFE */
 static roomba_mode_t current_mode = SAFE;
 
@@ -24,7 +26,7 @@ static roomba_mode_t current_mode = SAFE;
 ******************************************************************************/
 static void device_detect_on()
 {
-	P1OUT = 0x0;
+	P1OUT = DD_PIN;
 }
 
 /******************************************************************************
@@ -32,7 +34,7 @@ static void device_detect_on()
 ******************************************************************************/
 static void device_detect_off()
 {
-	P1OUT = 0x1;
+	P1OUT = 0;
 }
 
 /******************************************************************************
@@ -40,16 +42,26 @@ static void device_detect_off()
 ******************************************************************************/
 void initialize_roomba()
 {
-//	softwareUART_send_byte(ROI_START);
-//	delay_20ms();
-//
-//	softwareUART_send_byte(ROI_CONTROL);
-//	delay_20ms();
+	uint8_t i;
 
-	softwareUART_send_byte(128);
-	_delay_cycles(1000000);
-	softwareUART_send_byte(131);
-	_delay_cycles(5000000);
+	/* Set Roomba to 19200 Baud by pulsing DD pin 3 times */
+	delay_1s();
+	delay_1s();
+
+	for (i = 0; i < 3; i++)
+	{
+		device_detect_on();
+		_delay_cycles(250000);
+		device_detect_off();
+		_delay_cycles(250000);
+	}
+	delay_20ms();
+
+	/* Send initialization bytes */
+	softwareUART_send_byte(ROI_START);
+	delay_1s();
+	softwareUART_send_byte(ROI_SAFE);
+	delay_1s();
 }
 
 /******************************************************************************

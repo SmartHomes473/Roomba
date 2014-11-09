@@ -15,9 +15,6 @@ void processor_init()
 
 	/* GPIO for the device detect line */
 	P1DIR |= BIT0;
-
-	/* DD lines is active low */
-	P1OUT |= BIT0;
 }
 
 /******************************************************************************

@@ -22,6 +22,7 @@ int main(void) {
 	processor_init();
 	UART_init_9600();
 	softwareUART_init();
+	initialize_roomba();
 
 	uint8_t new_UART_RX;
 	parse_state_t state = NONE;
