@@ -12,6 +12,7 @@ typedef enum
 {
 	NONE,
 	STATUS,
+	DEVICE_NUM,
 	SIZE,
 	SIZE_2,
 	DATA, 
@@ -39,8 +40,11 @@ int main(void) {
 			{
 			case NONE:
 				if (new_UART_RX == PACKET_START_BYTE) {
-					state = STATUS;
+					state = DEVICE_NUM;
 				}
+				break;
+			case DEVICE_NUM:
+				state = STATUS;
 				break;
 			case STATUS:
 				state = SIZE;
