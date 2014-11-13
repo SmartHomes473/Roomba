@@ -12,6 +12,8 @@
 #define ROI_SPOT 134
 #define ROI_CLEAN 135
 #define ROI_MAX 136
+#define ROI_SPECIFY_SONG 140
+#define ROI_PLAY_SONG 141
 #define ROI_FORCE_DOCK 143
 #define ROI_DRIVE_DIRECT 145
 
@@ -35,6 +37,28 @@ static void device_detect_on()
 static void device_detect_off()
 {
 	P1OUT = 0;
+}
+
+/******************************************************************************
+* Internal function to initialize several songs
+******************************************************************************/
+static void write_songs()
+{
+
+    /* Zelda Lost Woods */
+    uint8_t song1[35] = 
+        {ROI_SPECIFY_SONG, 1, 15, 65, 13, 69, 13, 71, 26, 65, 13, 69, 13, 71, 26, 65, 13, 69, 13, 71, 13, 76, 13, 74, 26, 71, 13, 72, 13, 71, 13, 67, 13, 64, 26};
+    softwareUART_send_array(song1, 35);
+
+    /* Mario Game Over */
+    uint8_t song2[27] = 
+        {ROI_SPECIFY_SONG, 2, 11, 72, 57, 67, 57, 64, 38, 69, 26, 71, 26, 69, 26, 68, 26, 70, 26, 68, 26, 67, 10, 65, 10, 67, 57}; 
+    softwareUART_send_array(song2, 27);
+
+    /* Hall of the Mountain King */
+    uint8_t song1[32] =
+        {140, 3, 12, 35, 14, 37, 14, 38, 14, 40, 14, 42, 14, 38, 14, 42, 28, 41, 14, 37, 14, 41, 28, 40, 14, 36, 14, 40, 28};
+    softwareUART_send_array(song3, 32);
 }
 
 /******************************************************************************
@@ -62,6 +86,8 @@ void initialize_roomba()
 	delay_1s();
 	softwareUART_send_byte(ROI_SAFE);
 	delay_1s();
+
+    write_songs();
 }
 
 /******************************************************************************
@@ -172,3 +198,11 @@ void set_wheel_speeds(int16_t left_wheel, int16_t right_wheel)
 }
 
 
+/******************************************************************************
+* Play the specified song
+******************************************************************************/
+void play_song(uint8_t song_number)
+{
+    uint8_t play_song[2] = {ROI_PLAY_SONG, song_number}
+    softwareUART_send_array(play_song, 2);
+}

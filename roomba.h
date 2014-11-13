@@ -63,3 +63,9 @@ void send_dock();
  */
 void set_wheel_speeds(int16_t left_wheel, int16_t right_wheel);
 
+/*
+ * Play the song specified by the number between 1-4
+ * Works in any mode
+ */
+void play_song(uint8_t song_number);
+

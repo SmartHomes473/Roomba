@@ -10,7 +10,8 @@ typedef enum
 	START_CLEAN			= '2',
 	SEND_DOCK			= '3',
 	SET_WHEEL_SPEEDS	= '4',
-	TEST_MOVE			= '5'
+	TEST_MOVE			= '5',
+    PLAY_SONG           = '6'
 } roomba_functions_t;
 
 /* '0' is ASCII is 48 */

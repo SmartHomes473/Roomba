@@ -29,11 +29,14 @@ void deserialize(uint8_t* function)
 		left = (function[3] << 8) & function[4];
 		set_wheel_speeds(right, left);
 	}
-		break;
+    break;
 	case TEST_MOVE:
 		test_move();
 		break;
 	}
+    case PLAY_SONG:
+        play_song(function[1] - ASCII_OFFSET);
+        break;
 }
 
 
