@@ -46,18 +46,18 @@ static void write_songs()
 {
 
     /* Zelda Lost Woods */
-    uint8_t song1[35] = 
-        {ROI_SPECIFY_SONG, 1, 15, 65, 13, 69, 13, 71, 26, 65, 13, 69, 13, 71, 26, 65, 13, 69, 13, 71, 13, 76, 13, 74, 26, 71, 13, 72, 13, 71, 13, 67, 13, 64, 26};
+    uint8_t song1[35] =
+        {ROI_SPECIFY_SONG, 1, 16, 65, 13, 69, 13, 71, 26, 65, 13, 69, 13, 71, 26, 65, 13, 69, 13, 71, 13, 76, 13, 74, 26, 71, 13, 72, 13, 71, 13, 67, 13, 64, 26};
     softwareUART_send_array(song1, 35);
 
     /* Mario Game Over */
-    uint8_t song2[27] = 
-        {ROI_SPECIFY_SONG, 2, 11, 72, 57, 67, 57, 64, 38, 69, 26, 71, 26, 69, 26, 68, 26, 70, 26, 68, 26, 67, 10, 65, 10, 67, 57}; 
+    uint8_t song2[27] =
+        {ROI_SPECIFY_SONG, 2, 12, 72, 29, 67, 29, 64, 19, 69, 13, 71, 13, 69, 13, 68, 13, 70, 13, 68, 13, 67, 5, 65, 5, 67, 29};
     softwareUART_send_array(song2, 27);
 
     /* Hall of the Mountain King */
-    uint8_t song1[32] =
-        {140, 3, 12, 35, 14, 37, 14, 38, 14, 40, 14, 42, 14, 38, 14, 42, 28, 41, 14, 37, 14, 41, 28, 40, 14, 36, 14, 40, 28};
+    uint8_t song3[32] =
+        {ROI_SPECIFY_SONG, 3, 13, 35+24, 14, 37+24, 14, 38+24, 14, 40+24, 14, 42+24, 14, 38+24, 14, 42+24, 28, 41+24, 14, 37+24, 14, 41+24, 28, 40+24, 14, 36+24, 14, 40+24, 28};
     softwareUART_send_array(song3, 32);
 }
 
@@ -203,6 +203,6 @@ void set_wheel_speeds(int16_t left_wheel, int16_t right_wheel)
 ******************************************************************************/
 void play_song(uint8_t song_number)
 {
-    uint8_t play_song[2] = {ROI_PLAY_SONG, song_number}
+    uint8_t play_song[2] = {ROI_PLAY_SONG, song_number};
     softwareUART_send_array(play_song, 2);
 }

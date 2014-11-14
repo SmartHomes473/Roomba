@@ -33,10 +33,10 @@ void deserialize(uint8_t* function)
 	case TEST_MOVE:
 		test_move();
 		break;
-	}
     case PLAY_SONG:
         play_song(function[1] - ASCII_OFFSET);
         break;
+	}
 }
 
 
