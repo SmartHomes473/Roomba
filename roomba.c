@@ -61,9 +61,9 @@ static void write_songs()
     softwareUART_send_array(song3, 32);
 
 	/* Old Spice */
-	uint8_t song4[] = 
-		{ROI_SPECIFY_SONG, 0, 7, 69, 10] [69, 10, 71, 20, 74, 20, 73, 20, 76, 10, 78, 20, 74, 20};
-    softwareUART_send_array(song4, 32);
+	uint8_t song4[19] = 
+		{ROI_SPECIFY_SONG, 0, 7, 69, 10, 69, 10, 71, 20, 74, 20, 73, 20, 76, 10, 78, 20, 74, 20};
+    softwareUART_send_array(song4, 19);
 }
 
 /******************************************************************************
