@@ -62,7 +62,7 @@ static void write_songs()
 
 	/* Old Spice */
 	uint8_t song4[19] = 
-		{ROI_SPECIFY_SONG, 0, 7, 69, 10, 69, 10, 71, 20, 74, 20, 73, 20, 76, 10, 78, 20, 74, 20};
+		{ROI_SPECIFY_SONG, 0, 8, 69, 10, 69, 10, 71, 20, 74, 20, 73, 20, 76, 10, 78, 20, 74, 20};
     softwareUART_send_array(song4, 19);
 }
 
@@ -84,12 +84,13 @@ void initialize_roomba()
 		device_detect_off();
 		_delay_cycles(250000);
 	}
-	delay_20ms();
+	delay_1s();
 
 	/* Send initialization bytes */
+	softwareUART_send_byte(0x01);
 	softwareUART_send_byte(ROI_START);
 	delay_1s();
-	softwareUART_send_byte(ROI_SAFE);
+	softwareUART_send_byte(ROI_FULL);
 	delay_1s();
 
     write_songs();
